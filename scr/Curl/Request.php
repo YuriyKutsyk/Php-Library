@@ -6,9 +6,11 @@ class Request implements HttpRequest
 {
     private string $url;
     private array $options;
-    private \CurlHandle$handler;
+    private \CurlHandle $handler;
     private string $response;
-    public function __construct($url, $options = [],
+    public function __construct(
+        $url,
+        $options = [],
     )
     {
         $this->url = $url;

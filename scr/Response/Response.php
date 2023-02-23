@@ -2,7 +2,19 @@
 
 namespace Scr\Response;
 
-interface Response
+class Response implements HttpResponse
 {
-    public function getMessage();
+    public function __construct(private readonly ?string $message = null)
+    {
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function hasMessage(): bool
+    {
+        return !empty($this->message);
+    }
 }
