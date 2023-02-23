@@ -2,40 +2,61 @@
 
 namespace Scr\Curl;
 
-use http\Exception\RuntimeException;
-
 class Request implements HttpRequest
 {
-    public function __construct(
-        private readonly string $url,
-        private readonly array  $options = []
+    private string $url;
+    private array $options;
+    private \CurlHandle$handler;
+    private string $response;
+    public function __construct($url, $options = [],
     )
     {
+        $this->url = $url;
+        $this->options = empty($this->options) ? CURLOPT_URL : $options;
     }
 
-    public function getResponse(array $postData): string
+    public function init(): self
     {
-        $ch = curl_init($this->url);
+        $this->handler = curl_init();
+        return $this;
+    }
 
-        foreach ($this->options as $key => $option) {
-            curl_setopt($ch, $key, $option);
-        }
+    public function setOption($option = null, $value = null): self
+    {
+        curl_setopt(
+            $this->handler,
+            is_null($option) ? $this->options : $option,
+            is_null($value) ? $this->url : $value
+        );
+        return $this;
+    }
 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+    public function execute(): bool|string
+    {
+        return curl_exec($this->handler);
+    }
 
-        $response = curl_exec($ch);
-        $error = curl_error($ch);
-        $errno = curl_errno($ch);
+    public function buildQuery(array $array): self
+    {
+        curl_setopt($this->handler, CURLOPT_POSTFIELDS, http_build_query($array));
+        return $this;
+    }
 
-        if (is_resource($ch)) {
-            curl_close($ch);
-        }
+    public function decode(): self
+    {
+        $this->response = json_decode($this->execute(), true);
+        return $this;
+    }
 
-        if (0 != $errno) {
-            throw new RuntimeException($error, $errno);
-        }
+    public function fetch()
+    {
+        return json_decode(json_encode($this->response));
+    }
 
-        return json_encode($response);
+    public function close(): self
+    {
+        curl_close($this->handler);
+        return $this;
+
     }
 }
