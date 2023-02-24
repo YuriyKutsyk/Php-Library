@@ -11,8 +11,7 @@ class Request implements HttpRequest
     public function __construct(
         $url,
         $options = [],
-    )
-    {
+    ) {
         $this->url = $url;
         $this->options = empty($this->options) ? CURLOPT_URL : $options;
     }
