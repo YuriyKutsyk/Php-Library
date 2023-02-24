@@ -2,7 +2,7 @@
   "type": "library",
     "require": {
         "guzzlehttp/guzzle": "^7.5",
-      "ext-curl": "*",
-      "ext-http": "*"
+      "ext-curl": "8.1",
+      "ext-http": "8.1"
     }
 }

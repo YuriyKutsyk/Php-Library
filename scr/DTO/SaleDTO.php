@@ -1,33 +1,32 @@
 <?php
 
-namespace DTO;
+namespace Scr\DTO;
 
-class BaseDTO
+class SaleDTO
 {
     public function __construct(
-        public string $clientKey,
-        public string $orderID,
-        public float $orderAmount,
-        public string $orderCurrency,
-        public string $orderDescription,
-        public string $cardNumber,
-        public string $cardExpMonth,
-        public string $cardExpYear,
-        public string $cardCvv2,
-        public string $payerFirstName,
-        public string $payerLastName,
-        public string $payerAddress,
-        public string $payerCountry,
-        public string $payerState,
-        public string $payerCity,
-        public string $payerZip,
-        public string $payerEmail,
-        public string $payerPhone,
-        public float $payerIp,
-        public string $termUrl3ds,
-        public string $hash
-    )
-    {
+        private readonly string $clientKey,
+        private readonly string $orderID,
+        private readonly float $orderAmount,
+        private readonly string $orderCurrency,
+        private readonly string $orderDescription,
+        private readonly string $cardNumber,
+        private readonly string $cardExpMonth,
+        private readonly string $cardExpYear,
+        private readonly string $cardCvv2,
+        private readonly string $payerFirstName,
+        private readonly string $payerLastName,
+        private readonly string $payerAddress,
+        private readonly string $payerCountry,
+        private readonly string $payerState,
+        private readonly string $payerCity,
+        private readonly string $payerZip,
+        private readonly string $payerEmail,
+        private readonly string $payerPhone,
+        private readonly string $payerIp,
+        private readonly string $termUrl3ds,
+        private readonly string $hash
+    ) {
     }
 
     public function getClientKey(): string
@@ -107,7 +106,7 @@ class BaseDTO
 
     public function getPayerZip(): string
     {
-        return $this->payerCity;
+        return $this->payerZip;
     }
 
     public function getPayerEmail(): string
@@ -120,7 +119,7 @@ class BaseDTO
         return $this->payerPhone;
     }
 
-    public function getPayerIp(): float
+    public function getPayerIp(): string
     {
         return $this->payerIp;
     }

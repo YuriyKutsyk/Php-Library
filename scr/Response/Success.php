@@ -23,6 +23,6 @@ class Success extends Response
 
     public function hasData(): bool
     {
-        return $this->data !== null;
+        return isset($this->data);
     }
 }
